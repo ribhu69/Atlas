@@ -17,6 +17,7 @@
 		3C7A8BCFCF8699E575B70261 /* FileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AED94601882BF0AC188771 /* FileItem.swift */; };
 		4AFDA001F28BE96F0AF305FF /* GoogleDriveProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD368F9C27ADF6A6C3526B4D /* GoogleDriveProvider.swift */; };
 		591CC020D1C420EFDE28DBDC /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD42F74C5834CADC048C1A13 /* SidebarViewModel.swift */; };
+		5A873DEBAFFC5CE52EE103AA /* DocumentFolderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744C73E42EEC7C2B32647BA2 /* DocumentFolderPicker.swift */; };
 		5D66E61F122543932342FCE8 /* FileBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CB368E6F7322A658E608F5 /* FileBrowserView.swift */; };
 		714C6ADD0ADFC1AE99E1010A /* FileOperationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0215E0456390CD8AF387B0A4 /* FileOperationEngine.swift */; };
 		790AB993734C112141EE4324 /* FileTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23FAD0015022E1381367E57 /* FileTypeDetector.swift */; };
@@ -57,6 +58,7 @@
 		55B68554ED7035F3335F32D4 /* MediaPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerView.swift; sourceTree = "<group>"; };
 		67504E460DD76623921CAE26 /* FileBrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileBrowserViewModel.swift; sourceTree = "<group>"; };
 		6B305691780DEB27820EB301 /* ArchiveHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveHandler.swift; sourceTree = "<group>"; };
+		744C73E42EEC7C2B32647BA2 /* DocumentFolderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFolderPicker.swift; sourceTree = "<group>"; };
 		827651FA83863AD935464B07 /* LocalFileProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileProvider.swift; sourceTree = "<group>"; };
 		85C2D36C7AB973068B4D3F8A /* QuickLookPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreview.swift; sourceTree = "<group>"; };
 		98F8FF7F6BE65D43F006BD35 /* FileIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIconView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			children = (
 				5430BAE6DE01E0A83FEE4FCE /* AddConnectionView.swift */,
 				A8347BA50D2887BD47AD8FC4 /* ConnectionManagerView.swift */,
+				744C73E42EEC7C2B32647BA2 /* DocumentFolderPicker.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				926F8AD6FF5A4448D3764EEE /* ConnectionConfig.swift in Sources */,
 				0A97A1594EC9A8ECDD63DDA3 /* ConnectionManagerView.swift in Sources */,
 				C9D8E2E9ED1FA7F9301E1BDA /* ContentView.swift in Sources */,
+				5A873DEBAFFC5CE52EE103AA /* DocumentFolderPicker.swift in Sources */,
 				93E77FC8289B6CCA232EDE09 /* DropboxProvider.swift in Sources */,
 				F797FDB1C89A3876CB10DCDD /* FTPProvider.swift in Sources */,
 				C00EDC8572A49EDA1ADB9FEC /* FileActionProvider.swift in Sources */,

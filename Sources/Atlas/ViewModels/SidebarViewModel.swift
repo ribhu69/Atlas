@@ -5,17 +5,78 @@ import SwiftUI
 @MainActor
 final class SidebarViewModel {
     var bookmarks: [Bookmark] = []
+    var pinnedFolders: [PinnedFolder] = []   // user-picked via UIDocumentPickerViewController
     var expandedSections: Set<String> = ["local", "cloud", "network", "bookmarks"]
 
     private let bookmarkKey = "atlas.bookmarks"
+    private let pinnedFoldersKey = "atlas.pinnedFolders"
 
     init() {
         loadBookmarks()
+        loadPinnedFolders()
     }
 
     var localLocations: [(name: String, path: String, icon: String)] {
         LocalFileProvider.sidebarLocations()
     }
+
+    // MARK: - Pinned Folders (security-scoped bookmarks from UIDocumentPickerViewController)
+
+    func addPinnedFolder(url: URL) {
+        guard !pinnedFolders.contains(where: { $0.path == url.path }) else { return }
+        // On iOS, persist access with minimalBookmark (no security-scoped bookmark needed)
+        let bookmarkData = try? url.bookmarkData(
+            options: .minimalBookmark,
+            includingResourceValuesForKeys: nil,
+            relativeTo: nil
+        )
+        let folder = PinnedFolder(name: url.lastPathComponent, path: url.path, bookmarkData: bookmarkData)
+        pinnedFolders.append(folder)
+        savePinnedFolders()
+    }
+
+    func removePinnedFolder(at offsets: IndexSet) {
+        pinnedFolders.remove(atOffsets: offsets)
+        savePinnedFolders()
+    }
+
+    func removePinnedFolder(path: String) {
+        pinnedFolders.removeAll { $0.path == path }
+        savePinnedFolders()
+    }
+
+    func resolveURL(for folder: PinnedFolder) -> URL? {
+        guard let data = folder.bookmarkData else {
+            return URL(fileURLWithPath: folder.path)
+        }
+        var isStale = false
+        guard let url = try? URL(
+            resolvingBookmarkData: data,
+            options: [],
+            relativeTo: nil,
+            bookmarkDataIsStale: &isStale
+        ) else { return URL(fileURLWithPath: folder.path) }
+        if isStale, let fresh = try? url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil),
+           let idx = pinnedFolders.firstIndex(where: { $0.path == folder.path }) {
+            pinnedFolders[idx].bookmarkData = fresh
+            savePinnedFolders()
+        }
+        return url
+    }
+
+    private func savePinnedFolders() {
+        if let data = try? JSONEncoder().encode(pinnedFolders) {
+            UserDefaults.standard.set(data, forKey: pinnedFoldersKey)
+        }
+    }
+
+    private func loadPinnedFolders() {
+        guard let data = UserDefaults.standard.data(forKey: pinnedFoldersKey),
+              let saved = try? JSONDecoder().decode([PinnedFolder].self, from: data) else { return }
+        pinnedFolders = saved
+    }
+
+    // MARK: - Regular Bookmarks
 
     func addBookmark(item: FileItem) {
         guard !bookmarks.contains(where: { $0.path == item.path }) else { return }
@@ -53,6 +114,20 @@ final class SidebarViewModel {
         guard let data = UserDefaults.standard.data(forKey: bookmarkKey),
               let saved = try? JSONDecoder().decode([Bookmark].self, from: data) else { return }
         bookmarks = saved
+    }
+}
+
+struct PinnedFolder: Identifiable, Codable, Hashable {
+    let id: UUID
+    let name: String
+    let path: String
+    var bookmarkData: Data?
+
+    init(name: String, path: String, bookmarkData: Data?) {
+        self.id = UUID()
+        self.name = name
+        self.path = path
+        self.bookmarkData = bookmarkData
     }
 }
 

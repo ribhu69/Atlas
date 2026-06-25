@@ -5,10 +5,11 @@ struct SidebarView: View {
     @Binding var selectedLocation: SidebarLocation?
     @State private var appVM = AppViewModel.shared
     @State private var showingAddConnection = false
+    @State private var showingFolderPicker = false
 
     var body: some View {
         List(selection: $selectedLocation) {
-            // Local Storage
+            // Local Storage — app Documents folder
             Section("On This Device") {
                 ForEach(sidebarVM.localLocations, id: \.path) { loc in
                     SidebarRowView(
@@ -17,6 +18,38 @@ struct SidebarView: View {
                         color: .blue,
                         location: SidebarLocation(providerID: "local", path: loc.path, name: loc.name)
                     )
+                }
+            }
+
+            // User-pinned folders from Files App (UIDocumentPickerViewController)
+            if !sidebarVM.pinnedFolders.isEmpty {
+                Section("Locations") {
+                    ForEach(sidebarVM.pinnedFolders) { folder in
+                        SidebarRowView(
+                            name: folder.name,
+                            icon: "folder.fill",
+                            color: .orange,
+                            location: SidebarLocation(providerID: "local", path: folder.path, name: folder.name)
+                        )
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                sidebarVM.removePinnedFolder(path: folder.path)
+                            } label: {
+                                Label("Remove Location", systemImage: "minus.circle")
+                            }
+                        }
+                    }
+                    .onDelete { offsets in sidebarVM.removePinnedFolder(at: offsets) }
+                }
+            }
+
+            // Browse button — opens UIDocumentPickerViewController
+            Section {
+                Button {
+                    showingFolderPicker = true
+                } label: {
+                    Label("Browse Files App…", systemImage: "folder.badge.plus")
+                        .foregroundStyle(.blue)
                 }
             }
 
@@ -108,6 +141,14 @@ struct SidebarView: View {
                 if let provider = appVM.makeProvider(for: config) {
                     appVM.addProvider(provider)
                 }
+            }
+        }
+        .sheet(isPresented: $showingFolderPicker) {
+            DocumentFolderPicker { url in
+                sidebarVM.addPinnedFolder(url: url)
+                showingFolderPicker = false
+                // Navigate into the newly pinned folder
+                selectedLocation = SidebarLocation(providerID: "local", path: url.path, name: url.lastPathComponent)
             }
         }
     }

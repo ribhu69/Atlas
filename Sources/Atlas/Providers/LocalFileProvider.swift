@@ -12,12 +12,21 @@ final class LocalFileProvider: StorageProvider, @unchecked Sendable {
     private let fm = FileManager.default
     private let queue = DispatchQueue(label: "local.provider", qos: .userInitiated, attributes: .concurrent)
 
+    // Whether this instance holds a security-scoped URL that needs start/stop
+    private let isSecurityScoped: Bool
+
     init() {
-        rootPath = NSHomeDirectory()
+        rootPath = Self.documentsURL.path
+        isSecurityScoped = false
     }
 
-    init(rootPath: String) {
+    init(rootPath: String, securityScoped: Bool = false) {
         self.rootPath = rootPath
+        isSecurityScoped = securityScoped
+    }
+
+    static var documentsURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 
     func connect() async throws {}
@@ -25,6 +34,8 @@ final class LocalFileProvider: StorageProvider, @unchecked Sendable {
 
     func listDirectory(at path: String) async throws -> [FileItem] {
         let url = URL(fileURLWithPath: path)
+        let accessing = isSecurityScoped && url.startAccessingSecurityScopedResource()
+        defer { if accessing { url.stopAccessingSecurityScopedResource() } }
         let keys: [URLResourceKey] = [
             .nameKey, .fileSizeKey, .contentModificationDateKey,
             .creationDateKey, .isDirectoryKey, .isSymbolicLinkKey,
@@ -150,16 +161,18 @@ final class LocalFileProvider: StorageProvider, @unchecked Sendable {
         }
     }
 
-    // Returns notable local directories for sidebar display
+    // Returns the locations shown under "On This Device" in the sidebar
     static func sidebarLocations() -> [(name: String, path: String, icon: String)] {
         let fm = FileManager.default
-        let home = NSHomeDirectory()
+        let docsURL = documentsURL
         var locations: [(String, String, String)] = [
-            ("On My iPhone", home, "iphone"),
-            ("Documents", fm.urls(for: .documentDirectory, in: .userDomainMask)[0].path, "doc.fill"),
-            ("Downloads", fm.urls(for: .downloadsDirectory, in: .userDomainMask).first?.path ?? "\(home)/Downloads", "arrow.down.circle.fill"),
-            ("iCloud Drive", NSHomeDirectory() + "/Library/Mobile Documents", "icloud.fill"),
+            ("On My iPhone", docsURL.path, "iphone"),
         ]
+        // Show Downloads if it exists inside the sandbox
+        let downloadsURL = docsURL.appendingPathComponent("Downloads")
+        if (try? downloadsURL.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
+            locations.append(("Downloads", downloadsURL.path, "arrow.down.circle.fill"))
+        }
         return locations
     }
 }

@@ -33,7 +33,20 @@ struct ContentView: View {
         }
         .onChange(of: selectedLocation) { _, location in
             guard let location else { return }
-            let provider = appVM.provider(for: location.providerID) ?? LocalFileProvider()
+            let provider: any StorageProvider
+            if location.providerID == "local" {
+                // Check if this path is a user-pinned security-scoped folder
+                let pinned = sidebarVM.pinnedFolders.first(where: { $0.path == location.path })
+                if let pinned {
+                    let resolvedURL = sidebarVM.resolveURL(for: pinned)
+                    let rootPath = resolvedURL?.path ?? location.path
+                    provider = LocalFileProvider(rootPath: rootPath, securityScoped: true)
+                } else {
+                    provider = LocalFileProvider(rootPath: location.path)
+                }
+            } else {
+                provider = appVM.provider(for: location.providerID) ?? LocalFileProvider()
+            }
             browserVM = FileBrowserViewModel(provider: provider, path: location.path)
             Task { await browserVM?.load() }
         }
@@ -55,8 +68,11 @@ struct ContentView: View {
             Text(error.message)
         }
         .onAppear {
-            // Default: navigate to local on first launch
-            let local = SidebarLocation(providerID: "local", path: NSHomeDirectory(), name: "On My iPhone")
+            let local = SidebarLocation(
+                providerID: "local",
+                path: LocalFileProvider.documentsURL.path,
+                name: "On My iPhone"
+            )
             selectedLocation = local
         }
     }
