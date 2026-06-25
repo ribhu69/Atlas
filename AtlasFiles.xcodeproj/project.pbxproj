@@ -1,0 +1,551 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00A254795D5E3EBD81B03C69 /* iCloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B6653D5DE52FF02DBE731F /* iCloudProvider.swift */; };
+		03BB314C0C1020CB764E3F64 /* MediaPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B68554ED7035F3335F32D4 /* MediaPlayerView.swift */; };
+		0A97A1594EC9A8ECDD63DDA3 /* ConnectionManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8347BA50D2887BD47AD8FC4 /* ConnectionManagerView.swift */; };
+		11D340F2174867193D5C9EF9 /* OAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6BEFC212A3DCD39B5A83D /* OAuthProvider.swift */; };
+		121CEBAFC262835CBC5B8DE1 /* AtlasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E431560C918BF0B8D8A9D943 /* AtlasApp.swift */; };
+		371F0162C745909650AB55FE /* TransferProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36E6C7881A6FE8E5F4B728 /* TransferProgressView.swift */; };
+		3BD9B1A8C02B050B5591C61B /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB1AC0B020D02852D3DBE5A /* SidebarView.swift */; };
+		3C7A8BCFCF8699E575B70261 /* FileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AED94601882BF0AC188771 /* FileItem.swift */; };
+		4AFDA001F28BE96F0AF305FF /* GoogleDriveProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD368F9C27ADF6A6C3526B4D /* GoogleDriveProvider.swift */; };
+		591CC020D1C420EFDE28DBDC /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD42F74C5834CADC048C1A13 /* SidebarViewModel.swift */; };
+		5D66E61F122543932342FCE8 /* FileBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CB368E6F7322A658E608F5 /* FileBrowserView.swift */; };
+		714C6ADD0ADFC1AE99E1010A /* FileOperationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0215E0456390CD8AF387B0A4 /* FileOperationEngine.swift */; };
+		790AB993734C112141EE4324 /* FileTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23FAD0015022E1381367E57 /* FileTypeDetector.swift */; };
+		7B36CD21E2E356E03091EB72 /* ArchiveHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B305691780DEB27820EB301 /* ArchiveHandler.swift */; };
+		7D8BD6C4777805D36A0B2E08 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CB3DC0F3F9F0E010308E25 /* AppViewModel.swift */; };
+		7FAB0A6F182C36B339E93D1E /* QuickLookPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C2D36C7AB973068B4D3F8A /* QuickLookPreview.swift */; };
+		926F8AD6FF5A4448D3764EEE /* ConnectionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C69728AA8B60FCDD4BB60BB /* ConnectionConfig.swift */; };
+		93E77FC8289B6CCA232EDE09 /* DropboxProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BE6BDC3FC6A6887E775263 /* DropboxProvider.swift */; };
+		9A74AA823CFCD368B29E0EEB /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FF8ABE97A9B26B30C26F42 /* FileType.swift */; };
+		A0B6AA4951ADC68495E39980 /* FileGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50847906CB9F477935FEC91A /* FileGridView.swift */; };
+		AAA3339EB8E7C859BC73A43D /* AddConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5430BAE6DE01E0A83FEE4FCE /* AddConnectionView.swift */; };
+		AB295AF46E39AFAAE103C9A6 /* OneDriveProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0BEF2E13767BB51F9F3D7 /* OneDriveProvider.swift */; };
+		C00EDC8572A49EDA1ADB9FEC /* FileActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A85506F05338BD88F5FC0F /* FileActionProvider.swift */; };
+		C09A6A286791AC0663704B83 /* FileIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F8FF7F6BE65D43F006BD35 /* FileIconView.swift */; };
+		C9BA3C763326287E98DDA73A /* StorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AC10F88B086AD5CA136B78 /* StorageProvider.swift */; };
+		C9D8E2E9ED1FA7F9301E1BDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E433D5AC22753F4C00561961 /* ContentView.swift */; };
+		CB286A7D49698471000519AE /* FileBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67504E460DD76623921CAE26 /* FileBrowserViewModel.swift */; };
+		D0589D57A1B72ED90BEAEE2A /* FileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FA1EDC9258723CC4C3B99C /* FileListView.swift */; };
+		D5C28AB8D5ABBF6FE35B84F7 /* LocalFileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827651FA83863AD935464B07 /* LocalFileProvider.swift */; };
+		E1ABC265087D91DD8891EF06 /* WebDAVProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FF8DA5432C67855338728 /* WebDAVProvider.swift */; };
+		E40125123B84DBE0EFF5FB1A /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193B51BE31F21A3C040A03AD /* TextEditorView.swift */; };
+		F797FDB1C89A3876CB10DCDD /* FTPProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C12158FD06B900F47927D23 /* FTPProvider.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0215E0456390CD8AF387B0A4 /* FileOperationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOperationEngine.swift; sourceTree = "<group>"; };
+		0704EE4D98EB4AEC22BD1848 /* AtlasFiles.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AtlasFiles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		09B6653D5DE52FF02DBE731F /* iCloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudProvider.swift; sourceTree = "<group>"; };
+		0AB1AC0B020D02852D3DBE5A /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		17CB368E6F7322A658E608F5 /* FileBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileBrowserView.swift; sourceTree = "<group>"; };
+		193B51BE31F21A3C040A03AD /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
+		1C69728AA8B60FCDD4BB60BB /* ConnectionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionConfig.swift; sourceTree = "<group>"; };
+		2C12158FD06B900F47927D23 /* FTPProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPProvider.swift; sourceTree = "<group>"; };
+		2FB0BEF2E13767BB51F9F3D7 /* OneDriveProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDriveProvider.swift; sourceTree = "<group>"; };
+		50847906CB9F477935FEC91A /* FileGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGridView.swift; sourceTree = "<group>"; };
+		52FA1EDC9258723CC4C3B99C /* FileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListView.swift; sourceTree = "<group>"; };
+		5430BAE6DE01E0A83FEE4FCE /* AddConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddConnectionView.swift; sourceTree = "<group>"; };
+		55B68554ED7035F3335F32D4 /* MediaPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerView.swift; sourceTree = "<group>"; };
+		67504E460DD76623921CAE26 /* FileBrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileBrowserViewModel.swift; sourceTree = "<group>"; };
+		6B305691780DEB27820EB301 /* ArchiveHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveHandler.swift; sourceTree = "<group>"; };
+		827651FA83863AD935464B07 /* LocalFileProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileProvider.swift; sourceTree = "<group>"; };
+		85C2D36C7AB973068B4D3F8A /* QuickLookPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreview.swift; sourceTree = "<group>"; };
+		98F8FF7F6BE65D43F006BD35 /* FileIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIconView.swift; sourceTree = "<group>"; };
+		A8347BA50D2887BD47AD8FC4 /* ConnectionManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManagerView.swift; sourceTree = "<group>"; };
+		AF36E6C7881A6FE8E5F4B728 /* TransferProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferProgressView.swift; sourceTree = "<group>"; };
+		B6CB3DC0F3F9F0E010308E25 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		B9BE6BDC3FC6A6887E775263 /* DropboxProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxProvider.swift; sourceTree = "<group>"; };
+		C3A85506F05338BD88F5FC0F /* FileActionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActionProvider.swift; sourceTree = "<group>"; };
+		DAF6BEFC212A3DCD39B5A83D /* OAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthProvider.swift; sourceTree = "<group>"; };
+		DD368F9C27ADF6A6C3526B4D /* GoogleDriveProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveProvider.swift; sourceTree = "<group>"; };
+		DD42F74C5834CADC048C1A13 /* SidebarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
+		E23FAD0015022E1381367E57 /* FileTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTypeDetector.swift; sourceTree = "<group>"; };
+		E431560C918BF0B8D8A9D943 /* AtlasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtlasApp.swift; sourceTree = "<group>"; };
+		E433D5AC22753F4C00561961 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ED1FF8DA5432C67855338728 /* WebDAVProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDAVProvider.swift; sourceTree = "<group>"; };
+		F3AED94601882BF0AC188771 /* FileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileItem.swift; sourceTree = "<group>"; };
+		F7FF8ABE97A9B26B30C26F42 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
+		F8AC10F88B086AD5CA136B78 /* StorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProvider.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		05EF75BD7B9D758E6D146A92 = {
+			isa = PBXGroup;
+			children = (
+				196CB17B5BD4DC2EB464C028 /* Sources */,
+				15CE55156F6529C9CD5430E6 /* Products */,
+			);
+			indentWidth = 4;
+			sourceTree = "<group>";
+			tabWidth = 4;
+		};
+		15CE55156F6529C9CD5430E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0704EE4D98EB4AEC22BD1848 /* AtlasFiles.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		196CB17B5BD4DC2EB464C028 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F1D72EEC230F05CA374B64CF /* Atlas */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		24D74923158999BD3360D304 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				AF36E6C7881A6FE8E5F4B728 /* TransferProgressView.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		25488B5B3DBDB714CBE6E8A5 /* FileTypes */ = {
+			isa = PBXGroup;
+			children = (
+				C3A85506F05338BD88F5FC0F /* FileActionProvider.swift */,
+				E23FAD0015022E1381367E57 /* FileTypeDetector.swift */,
+			);
+			path = FileTypes;
+			sourceTree = "<group>";
+		};
+		25D42ABE4446A832C8573C54 /* Cloud */ = {
+			isa = PBXGroup;
+			children = (
+				B9BE6BDC3FC6A6887E775263 /* DropboxProvider.swift */,
+				DD368F9C27ADF6A6C3526B4D /* GoogleDriveProvider.swift */,
+				DAF6BEFC212A3DCD39B5A83D /* OAuthProvider.swift */,
+				2FB0BEF2E13767BB51F9F3D7 /* OneDriveProvider.swift */,
+			);
+			path = Cloud;
+			sourceTree = "<group>";
+		};
+		28C95B450C7BA718B7F0FA97 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				0215E0456390CD8AF387B0A4 /* FileOperationEngine.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		513ABECE690A782AFA13F29F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1C69728AA8B60FCDD4BB60BB /* ConnectionConfig.swift */,
+				F3AED94601882BF0AC188771 /* FileItem.swift */,
+				F7FF8ABE97A9B26B30C26F42 /* FileType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5660C2DCA9FE5F623A40F43D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				98F8FF7F6BE65D43F006BD35 /* FileIconView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7CCD0C7DC9329C880D7F08AA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C7284842C8FC94768919B184 /* Browser */,
+				5660C2DCA9FE5F623A40F43D /* Components */,
+				C86C0298548232D4FD74492F /* Connections */,
+				24D74923158999BD3360D304 /* Operations */,
+				C61CDA89EA1958F2F8A743FC /* Preview */,
+				91C3DF3B918B89B1A58F9360 /* Sidebar */,
+				E433D5AC22753F4C00561961 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7E418A2531DE0CC1DAE22115 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B6CB3DC0F3F9F0E010308E25 /* AppViewModel.swift */,
+				67504E460DD76623921CAE26 /* FileBrowserViewModel.swift */,
+				DD42F74C5834CADC048C1A13 /* SidebarViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		91C3DF3B918B89B1A58F9360 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				0AB1AC0B020D02852D3DBE5A /* SidebarView.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		9FA7104FF5A282AE0625A0C1 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				25D42ABE4446A832C8573C54 /* Cloud */,
+				2C12158FD06B900F47927D23 /* FTPProvider.swift */,
+				09B6653D5DE52FF02DBE731F /* iCloudProvider.swift */,
+				827651FA83863AD935464B07 /* LocalFileProvider.swift */,
+				F8AC10F88B086AD5CA136B78 /* StorageProvider.swift */,
+				ED1FF8DA5432C67855338728 /* WebDAVProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		A79D98DF21B24F8A9A5CC291 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				6B305691780DEB27820EB301 /* ArchiveHandler.swift */,
+			);
+			path = Archive;
+			sourceTree = "<group>";
+		};
+		C61CDA89EA1958F2F8A743FC /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				55B68554ED7035F3335F32D4 /* MediaPlayerView.swift */,
+				85C2D36C7AB973068B4D3F8A /* QuickLookPreview.swift */,
+				193B51BE31F21A3C040A03AD /* TextEditorView.swift */,
+			);
+			path = Preview;
+			sourceTree = "<group>";
+		};
+		C7284842C8FC94768919B184 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				17CB368E6F7322A658E608F5 /* FileBrowserView.swift */,
+				50847906CB9F477935FEC91A /* FileGridView.swift */,
+				52FA1EDC9258723CC4C3B99C /* FileListView.swift */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		C86C0298548232D4FD74492F /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				5430BAE6DE01E0A83FEE4FCE /* AddConnectionView.swift */,
+				A8347BA50D2887BD47AD8FC4 /* ConnectionManagerView.swift */,
+			);
+			path = Connections;
+			sourceTree = "<group>";
+		};
+		F1D72EEC230F05CA374B64CF /* Atlas */ = {
+			isa = PBXGroup;
+			children = (
+				A79D98DF21B24F8A9A5CC291 /* Archive */,
+				25488B5B3DBDB714CBE6E8A5 /* FileTypes */,
+				513ABECE690A782AFA13F29F /* Models */,
+				28C95B450C7BA718B7F0FA97 /* Operations */,
+				9FA7104FF5A282AE0625A0C1 /* Providers */,
+				7E418A2531DE0CC1DAE22115 /* ViewModels */,
+				7CCD0C7DC9329C880D7F08AA /* Views */,
+				E431560C918BF0B8D8A9D943 /* AtlasApp.swift */,
+			);
+			path = Atlas;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		019B00779F3DFF69F6B0AFB7 /* AtlasFiles */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 60DCAE2D7381B186A3CA91FC /* Build configuration list for PBXNativeTarget "AtlasFiles" */;
+			buildPhases = (
+				C199BD034E4A475C2BD59142 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AtlasFiles;
+			packageProductDependencies = (
+			);
+			productName = AtlasFiles;
+			productReference = 0704EE4D98EB4AEC22BD1848 /* AtlasFiles.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7E0519D5C052D89883CD1D32 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					019B00779F3DFF69F6B0AFB7 = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = F74994EE511EBEBD89AC6E77 /* Build configuration list for PBXProject "AtlasFiles" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 05EF75BD7B9D758E6D146A92;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 15CE55156F6529C9CD5430E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				019B00779F3DFF69F6B0AFB7 /* AtlasFiles */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C199BD034E4A475C2BD59142 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAA3339EB8E7C859BC73A43D /* AddConnectionView.swift in Sources */,
+				7D8BD6C4777805D36A0B2E08 /* AppViewModel.swift in Sources */,
+				7B36CD21E2E356E03091EB72 /* ArchiveHandler.swift in Sources */,
+				121CEBAFC262835CBC5B8DE1 /* AtlasApp.swift in Sources */,
+				926F8AD6FF5A4448D3764EEE /* ConnectionConfig.swift in Sources */,
+				0A97A1594EC9A8ECDD63DDA3 /* ConnectionManagerView.swift in Sources */,
+				C9D8E2E9ED1FA7F9301E1BDA /* ContentView.swift in Sources */,
+				93E77FC8289B6CCA232EDE09 /* DropboxProvider.swift in Sources */,
+				F797FDB1C89A3876CB10DCDD /* FTPProvider.swift in Sources */,
+				C00EDC8572A49EDA1ADB9FEC /* FileActionProvider.swift in Sources */,
+				5D66E61F122543932342FCE8 /* FileBrowserView.swift in Sources */,
+				CB286A7D49698471000519AE /* FileBrowserViewModel.swift in Sources */,
+				A0B6AA4951ADC68495E39980 /* FileGridView.swift in Sources */,
+				C09A6A286791AC0663704B83 /* FileIconView.swift in Sources */,
+				3C7A8BCFCF8699E575B70261 /* FileItem.swift in Sources */,
+				D0589D57A1B72ED90BEAEE2A /* FileListView.swift in Sources */,
+				714C6ADD0ADFC1AE99E1010A /* FileOperationEngine.swift in Sources */,
+				9A74AA823CFCD368B29E0EEB /* FileType.swift in Sources */,
+				790AB993734C112141EE4324 /* FileTypeDetector.swift in Sources */,
+				4AFDA001F28BE96F0AF305FF /* GoogleDriveProvider.swift in Sources */,
+				D5C28AB8D5ABBF6FE35B84F7 /* LocalFileProvider.swift in Sources */,
+				03BB314C0C1020CB764E3F64 /* MediaPlayerView.swift in Sources */,
+				11D340F2174867193D5C9EF9 /* OAuthProvider.swift in Sources */,
+				AB295AF46E39AFAAE103C9A6 /* OneDriveProvider.swift in Sources */,
+				7FAB0A6F182C36B339E93D1E /* QuickLookPreview.swift in Sources */,
+				3BD9B1A8C02B050B5591C61B /* SidebarView.swift in Sources */,
+				591CC020D1C420EFDE28DBDC /* SidebarViewModel.swift in Sources */,
+				C9BA3C763326287E98DDA73A /* StorageProvider.swift in Sources */,
+				E40125123B84DBE0EFF5FB1A /* TextEditorView.swift in Sources */,
+				371F0162C745909650AB55FE /* TransferProgressView.swift in Sources */,
+				E1ABC265087D91DD8891EF06 /* WebDAVProvider.swift in Sources */,
+				00A254795D5E3EBD81B03C69 /* iCloudProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		24E59AEBD77BBA67120B41D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		889CBB639B743506F10B2D0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AtlasFiles/AtlasFiles.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = AtlasFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ribhu69.atlasfiles;
+				PRODUCT_NAME = AtlasFiles;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		94067CF2104A12FBA13AAC39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		F459B574FADCFA725415366A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AtlasFiles/AtlasFiles.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = AtlasFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ribhu69.atlasfiles;
+				PRODUCT_NAME = AtlasFiles;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		60DCAE2D7381B186A3CA91FC /* Build configuration list for PBXNativeTarget "AtlasFiles" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F459B574FADCFA725415366A /* Debug */,
+				889CBB639B743506F10B2D0A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F74994EE511EBEBD89AC6E77 /* Build configuration list for PBXProject "AtlasFiles" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24E59AEBD77BBA67120B41D7 /* Debug */,
+				94067CF2104A12FBA13AAC39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7E0519D5C052D89883CD1D32 /* Project object */;
+}

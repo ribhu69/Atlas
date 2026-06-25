@@ -1,7 +1,8 @@
-# Xcode
-*.xcodeproj/
-*.xcworkspace/
+# Xcode — commit the project file, not user-specific data
 xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
 DerivedData/
 *.moved-aside
 *.pbxuser
