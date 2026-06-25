@@ -6,7 +6,7 @@ final class WebDAVProvider: StorageProvider, @unchecked Sendable {
     nonisolated let icon: String = "network"
     nonisolated let connectionType: ConnectionType
     nonisolated let rootPath: String
-    nonisolated private(set) var isConnected: Bool = false
+    private(set) var isConnected: Bool = false
 
     private let config: ConnectionConfig
     private var session: URLSession!

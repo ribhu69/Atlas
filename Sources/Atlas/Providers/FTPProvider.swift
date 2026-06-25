@@ -187,18 +187,11 @@ actor FTPProvider: StorageProvider {
         guard transferResp.starts(with: "150") || transferResp.starts(with: "125") else {
             throw ProviderError.operationFailed("RETR failed: \(transferResp)")
         }
-        let totalSize = item.size ?? 0
-        var received: Int64 = 0
-        let fileHandle = try FileHandle(forWritingTo: { () -> URL in
-            FileManager.default.createFile(atPath: localURL.path, contents: nil)
-            return localURL
-        }())
-        defer { try? fileHandle.close() }
-
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            self.receiveChunked(connection: dataConn, totalSize: totalSize, received: &received, fileHandle: fileHandle, progress: progress, continuation: continuation)
-        }
+        progress(0.5)
+        let data = try await readAllData(from: dataConn)
+        FileManager.default.createFile(atPath: localURL.path, contents: data)
         _ = try await readResponse() // 226
+        progress(1.0)
     }
 
     func upload(from localURL: URL, to path: String, progress: @escaping @Sendable (Double) -> Void) async throws -> FileItem {
@@ -351,33 +344,6 @@ actor FTPProvider: StorageProvider {
         }
         conn.cancel()
         return allData
-    }
-
-    private func receiveChunked(
-        connection: NWConnection,
-        totalSize: Int64,
-        received: inout Int64,
-        fileHandle: FileHandle,
-        progress: @escaping @Sendable (Double) -> Void,
-        continuation: CheckedContinuation<Void, Error>
-    ) {
-        connection.receive(minimumIncompleteLength: 1, maximumLength: 65536) { data, _, isComplete, error in
-            if let error {
-                continuation.resume(throwing: ProviderError.networkError(error.localizedDescription))
-                return
-            }
-            if let data {
-                try? fileHandle.write(contentsOf: data)
-                received += Int64(data.count)
-                if totalSize > 0 { progress(Double(received) / Double(totalSize)) }
-            }
-            if isComplete {
-                connection.cancel()
-                continuation.resume()
-            } else {
-                self.receiveChunked(connection: connection, totalSize: totalSize, received: &received, fileHandle: fileHandle, progress: progress, continuation: continuation)
-            }
-        }
     }
 
     // MARK: - Parsers

@@ -25,7 +25,8 @@ struct QuickLookPreview: UIViewControllerRepresentable {
         }
     }
 
-    final class Coordinator: NSObject, QLPreviewControllerDataSource, QLPreviewControllerDelegate {
+    @MainActor
+    final class Coordinator: NSObject, @preconcurrency QLPreviewControllerDataSource, @preconcurrency QLPreviewControllerDelegate {
         var item: FileItem?
         let dismiss: DismissAction
 

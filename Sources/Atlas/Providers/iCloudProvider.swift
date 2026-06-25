@@ -6,7 +6,7 @@ final class iCloudProvider: StorageProvider, @unchecked Sendable {
     nonisolated let icon: String = "icloud.fill"
     nonisolated let connectionType: ConnectionType = .iCloud
     nonisolated let rootPath: String
-    nonisolated private(set) var isConnected: Bool = false
+    private(set) var isConnected: Bool = false
     nonisolated let supportsTrash: Bool = true
 
     private let fm = FileManager.default

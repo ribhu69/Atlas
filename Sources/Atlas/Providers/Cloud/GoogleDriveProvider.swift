@@ -1,14 +1,15 @@
 import Foundation
+import UniformTypeIdentifiers
 
 // Google Drive REST API v3
 @MainActor
-final class GoogleDriveProvider: OAuthProviderBase, StorageProvider, @unchecked Sendable {
+final class GoogleDriveProvider: OAuthProviderBase, @preconcurrency StorageProvider, @unchecked Sendable {
     nonisolated let id: String
     nonisolated let name: String = "Google Drive"
     nonisolated let icon: String = "arrow.triangle.2.circlepath.circle.fill"
     nonisolated let connectionType: ConnectionType = .googleDrive
     nonisolated let rootPath: String = "root"
-    nonisolated private(set) var isConnected: Bool = false
+    private(set) var isConnected: Bool = false
 
     private let providerIDValue: String
     private let session = URLSession.shared
@@ -17,6 +18,7 @@ final class GoogleDriveProvider: OAuthProviderBase, StorageProvider, @unchecked 
 
     init(clientID: String, clientSecret: String) {
         let id = "googledrive-\(UUID().uuidString.prefix(8))"
+        self.id = id
         self.providerIDValue = id
         super.init(
             clientID: clientID,
@@ -27,7 +29,6 @@ final class GoogleDriveProvider: OAuthProviderBase, StorageProvider, @unchecked 
             scopes: ["https://www.googleapis.com/auth/drive"],
             keychainKey: "google_drive_token"
         )
-        self.id = id
     }
 
     func connect() async throws {
@@ -73,7 +74,7 @@ final class GoogleDriveProvider: OAuthProviderBase, StorageProvider, @unchecked 
         var req = try await makeRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let body = ["name": name, "mimeType": "application/vnd.google-apps.folder", "parents": [path]]
+        let body: [String: Any] = ["name": name, "mimeType": "application/vnd.google-apps.folder", "parents": [path]]
         req.httpBody = try JSONSerialization.data(withJSONObject: body)
         let (data, _) = try await session.data(for: req)
         let file = try JSONDecoder().decode(DriveFile.self, from: data)

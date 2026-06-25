@@ -4,8 +4,15 @@ struct FileListView: View {
     @State var vm: FileBrowserViewModel
     let onAction: (BrowserAction, FileItem) -> Void
 
+    private var selectionBinding: Binding<Set<FileItem>?> {
+        Binding(
+            get: { vm.selectedItems },
+            set: { vm.selectedItems = $0 ?? [] }
+        )
+    }
+
     var body: some View {
-        List(vm.filteredItems, selection: vm.isSelecting ? $vm.selectedItems : .constant(nil)) { item in
+        List(vm.filteredItems, selection: selectionBinding) { item in
             FileRowView(item: item, isSelected: vm.selectedItems.contains(item), isSelecting: vm.isSelecting)
                 .contentShape(Rectangle())
                 .onTapGesture {

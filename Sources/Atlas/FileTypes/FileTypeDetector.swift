@@ -44,7 +44,7 @@ final class FileTypeDetector {
             || utType.conforms(to: .text)
             || utType.conforms(to: .spreadsheet)
             || utType.conforms(to: .presentation)
-            || utType.conforms(to: .wordProcessingDocument)
+            || utType.conforms(to: .compositeContent)
     }
 
     static func syntaxLanguage(for ext: String) -> String? {

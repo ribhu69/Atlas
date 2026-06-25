@@ -2,13 +2,13 @@ import Foundation
 
 // Dropbox API v2
 @MainActor
-final class DropboxProvider: OAuthProviderBase, StorageProvider, @unchecked Sendable {
+final class DropboxProvider: OAuthProviderBase, @preconcurrency StorageProvider, @unchecked Sendable {
     nonisolated let id: String
     nonisolated let name: String = "Dropbox"
     nonisolated let icon: String = "tray.and.arrow.down.fill"
     nonisolated let connectionType: ConnectionType = .dropbox
     nonisolated let rootPath: String = ""
-    nonisolated private(set) var isConnected: Bool = false
+    private(set) var isConnected: Bool = false
 
     private let session = URLSession.shared
     private static let apiBase = URL(string: "https://api.dropboxapi.com/2")!
@@ -16,6 +16,7 @@ final class DropboxProvider: OAuthProviderBase, StorageProvider, @unchecked Send
 
     init(appKey: String, appSecret: String) {
         let id = "dropbox-\(UUID().uuidString.prefix(8))"
+        self.id = id
         super.init(
             clientID: appKey,
             clientSecret: appSecret,
@@ -25,7 +26,6 @@ final class DropboxProvider: OAuthProviderBase, StorageProvider, @unchecked Send
             scopes: ["files.content.read", "files.content.write", "files.metadata.read", "files.metadata.write"],
             keychainKey: "dropbox_token"
         )
-        self.id = id
     }
 
     func connect() async throws {

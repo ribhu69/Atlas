@@ -2,19 +2,20 @@ import Foundation
 
 // Microsoft Graph API for OneDrive
 @MainActor
-final class OneDriveProvider: OAuthProviderBase, StorageProvider, @unchecked Sendable {
+final class OneDriveProvider: OAuthProviderBase, @preconcurrency StorageProvider, @unchecked Sendable {
     nonisolated let id: String
     nonisolated let name: String = "OneDrive"
     nonisolated let icon: String = "cloud.fill"
     nonisolated let connectionType: ConnectionType = .oneDrive
     nonisolated let rootPath: String = "root"
-    nonisolated private(set) var isConnected: Bool = false
+    private(set) var isConnected: Bool = false
 
     private let session = URLSession.shared
     private static let apiBase = URL(string: "https://graph.microsoft.com/v1.0/me/drive")!
 
     init(clientID: String, tenantID: String = "common") {
         let id = "onedrive-\(UUID().uuidString.prefix(8))"
+        self.id = id
         super.init(
             clientID: clientID,
             clientSecret: "",
@@ -24,7 +25,6 @@ final class OneDriveProvider: OAuthProviderBase, StorageProvider, @unchecked Sen
             scopes: ["Files.ReadWrite", "offline_access"],
             keychainKey: "onedrive_token"
         )
-        self.id = id
     }
 
     func connect() async throws {

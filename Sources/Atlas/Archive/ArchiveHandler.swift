@@ -119,27 +119,129 @@ final class ArchiveHandler: Sendable {
     }
 
     private func extractZIP(from source: URL, to destination: URL, progress: @escaping @Sendable (Double) -> Void) throws {
+        let data = try Data(contentsOf: source)
         let fm = FileManager.default
         try fm.createDirectory(at: destination, withIntermediateDirectories: true)
 
-        // Use Process to call unzip if available, fallback to manual parsing
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/unzip")
-        process.arguments = ["-o", source.path, "-d", destination.path]
-        try process.run()
-        process.waitUntilExit()
-        progress(1.0)
+        var entries: [(dataOffset: Int, compressedSize: Int, uncompressedSize: Int, method: Int, name: String)] = []
+        var offset = 0
+
+        while offset + 30 <= data.count {
+            guard data.zipU32LE(at: offset) == 0x04034b50 else { offset += 1; continue }
+            let method = Int(data.zipU16LE(at: offset + 8))
+            let compressedSize = Int(data.zipU32LE(at: offset + 18))
+            let uncompressedSize = Int(data.zipU32LE(at: offset + 22))
+            let nameLen = Int(data.zipU16LE(at: offset + 26))
+            let extraLen = Int(data.zipU16LE(at: offset + 28))
+            guard offset + 30 + nameLen <= data.count else { break }
+            let nameBytes = data[(offset + 30)..<(offset + 30 + nameLen)]
+            let name = String(data: nameBytes, encoding: .utf8) ?? String(data: nameBytes, encoding: .isoLatin1) ?? ""
+            let dataOffset = offset + 30 + nameLen + extraLen
+            entries.append((dataOffset, compressedSize, uncompressedSize, method, name))
+            offset = dataOffset + compressedSize
+        }
+
+        for (i, entry) in entries.enumerated() {
+            let name = entry.name
+            guard !name.isEmpty else { continue }
+            if name.hasSuffix("/") {
+                try? fm.createDirectory(at: destination.appendingPathComponent(name), withIntermediateDirectories: true)
+            } else {
+                let fileURL = destination.appendingPathComponent(name)
+                try? fm.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+                let end = min(entry.dataOffset + entry.compressedSize, data.count)
+                let compData = Data(data[entry.dataOffset..<end])
+                switch entry.method {
+                case 0:
+                    try compData.write(to: fileURL)
+                case 8:
+                    try zlibInflate(compData, windowBits: -15).write(to: fileURL)
+                default:
+                    break
+                }
+            }
+            progress(Double(i + 1) / Double(max(entries.count, 1)))
+        }
     }
 
     private func extractTarGZ(from source: URL, to destination: URL, progress: @escaping @Sendable (Double) -> Void) throws {
         let fm = FileManager.default
         try fm.createDirectory(at: destination, withIntermediateDirectories: true)
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/tar")
-        process.arguments = ["-xzf", source.path, "-C", destination.path]
-        try process.run()
-        process.waitUntilExit()
+        let compressed = try Data(contentsOf: source)
+        let tarData = try zlibInflate(compressed, windowBits: 31)
+        try parseTar(tarData, to: destination)
         progress(1.0)
+    }
+
+    private func parseTar(_ data: Data, to destination: URL) throws {
+        let fm = FileManager.default
+        var pos = 0
+        var pendingLongName: String? = nil
+        while pos + 512 <= data.count {
+            if data[pos..<pos + 512].allSatisfy({ $0 == 0 }) { break }
+            let rawName = String(bytes: data[pos..<pos + 100].prefix(while: { $0 != 0 }), encoding: .utf8) ?? ""
+            let prefix = String(bytes: data[pos + 345..<min(pos + 500, data.count)].prefix(while: { $0 != 0 }), encoding: .utf8) ?? ""
+            let typeFlag = data[pos + 156]
+            let sizeStr = String(bytes: data[pos + 124..<pos + 136].prefix(while: { $0 != 0 }), encoding: .utf8)?.trimmingCharacters(in: .whitespaces) ?? "0"
+            let fileSize = Int(sizeStr, radix: 8) ?? 0
+            pos += 512
+            let name: String
+            if let ln = pendingLongName { name = ln; pendingLongName = nil }
+            else if !prefix.isEmpty { name = prefix + "/" + rawName }
+            else { name = rawName }
+            switch typeFlag {
+            case 48, 0:
+                if !name.isEmpty {
+                    let fu = destination.appendingPathComponent(name)
+                    try? fm.createDirectory(at: fu.deletingLastPathComponent(), withIntermediateDirectories: true)
+                    let end = min(pos + fileSize, data.count)
+                    try Data(data[pos..<end]).write(to: fu)
+                }
+            case 53:
+                try? fm.createDirectory(at: destination.appendingPathComponent(name), withIntermediateDirectories: true)
+            case 76:
+                if fileSize > 0 {
+                    let end = min(pos + fileSize, data.count)
+                    pendingLongName = String(data: Data(data[pos..<end]), encoding: .utf8)?.trimmingCharacters(in: .init(charactersIn: "\0"))
+                }
+            default: break
+            }
+            pos += ((fileSize + 511) / 512) * 512
+        }
+    }
+
+    private func zlibInflate(_ compressed: Data, windowBits: Int32) throws -> Data {
+        var stream = z_stream()
+        guard inflateInit2_(&stream, windowBits, ZLIB_VERSION, Int32(MemoryLayout<z_stream>.size)) == Z_OK else {
+            throw ProviderError.operationFailed("zlib init failed")
+        }
+        defer { inflateEnd(&stream) }
+
+        let inputBytes = [UInt8](compressed)
+        var output = Data()
+        var status: Int32 = Z_OK
+
+        inputBytes.withUnsafeBufferPointer { inBuf in
+            stream.next_in = UnsafeMutablePointer(mutating: inBuf.baseAddress!)
+            stream.avail_in = uInt(inBuf.count)
+            var chunk = [UInt8](repeating: 0, count: 65536)
+            repeat {
+                chunk.withUnsafeMutableBufferPointer { outBuf in
+                    stream.next_out = outBuf.baseAddress!
+                    stream.avail_out = uInt(outBuf.count)
+                    status = inflate(&stream, Z_NO_FLUSH)
+                    let produced = outBuf.count - Int(stream.avail_out)
+                    if produced > 0 {
+                        output.append(contentsOf: outBuf.prefix(produced))
+                    }
+                }
+            } while status == Z_OK
+        }
+
+        guard status == Z_STREAM_END else {
+            throw ProviderError.operationFailed("inflate failed with status \(status)")
+        }
+        return output
     }
 
     private func decompressGzip(from source: URL, to destination: URL, progress: @escaping @Sendable (Double) -> Void) throws {
@@ -155,25 +257,27 @@ final class ArchiveHandler: Sendable {
     }
 
     private func listZIPContents(of source: URL) throws -> [ArchiveEntry] {
-        // Simplified: use `unzip -l` output parsing
+        let data = try Data(contentsOf: source)
         var entries: [ArchiveEntry] = []
-        let process = Process()
-        let pipe = Pipe()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/unzip")
-        process.arguments = ["-l", source.path]
-        process.standardOutput = pipe
-        try process.run()
-        process.waitUntilExit()
-
-        let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-        let lines = output.components(separatedBy: "\n").dropFirst(3).dropLast(3)
-        for line in lines {
-            let parts = line.trimmingCharacters(in: .whitespaces).components(separatedBy: .whitespaces)
-            guard parts.count >= 4 else { continue }
-            let name = parts[3...].joined(separator: " ")
-            let size = Int64(parts[0]) ?? 0
-            let isDir = name.hasSuffix("/")
-            entries.append(ArchiveEntry(name: name, size: size, isDirectory: isDir, compressionRatio: 0))
+        var offset = 0
+        while offset + 30 <= data.count {
+            let sig = data.zipU32LE(at: offset)
+            if sig == 0x04034b50 {
+                let compressedSize = Int(data.zipU32LE(at: offset + 18))
+                let uncompressedSize = Int(data.zipU32LE(at: offset + 22))
+                let nameLen = Int(data.zipU16LE(at: offset + 26))
+                let extraLen = Int(data.zipU16LE(at: offset + 28))
+                guard offset + 30 + nameLen <= data.count else { break }
+                let nameBytes = data[(offset + 30)..<(offset + 30 + nameLen)]
+                let name = String(data: nameBytes, encoding: .utf8) ?? String(data: nameBytes, encoding: .isoLatin1) ?? ""
+                let ratio = uncompressedSize > 0 ? 1.0 - Double(compressedSize) / Double(uncompressedSize) : 0
+                entries.append(ArchiveEntry(name: name, size: Int64(uncompressedSize), isDirectory: name.hasSuffix("/"), compressionRatio: ratio))
+                offset += 30 + nameLen + extraLen + compressedSize
+            } else if sig == 0x02014b50 || sig == 0x06054b50 {
+                break
+            } else {
+                offset += 1
+            }
         }
         return entries
     }
@@ -296,6 +400,19 @@ private extension Data {
     mutating func append(littleEndian32 value: UInt32) {
         var v = value.littleEndian
         append(Data(bytes: &v, count: 4))
+    }
+
+    func zipU16LE(at index: Int) -> UInt16 {
+        guard index + 2 <= count else { return 0 }
+        return UInt16(self[index]) | (UInt16(self[index + 1]) << 8)
+    }
+
+    func zipU32LE(at index: Int) -> UInt32 {
+        guard index + 4 <= count else { return 0 }
+        return UInt32(self[index])
+            | (UInt32(self[index + 1]) << 8)
+            | (UInt32(self[index + 2]) << 16)
+            | (UInt32(self[index + 3]) << 24)
     }
 }
 

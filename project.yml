@@ -76,6 +76,8 @@ targets:
         SWIFT_EMIT_LOC_STRINGS: true
         ENABLE_BITCODE: false
         TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_OBJC_BRIDGING_HEADER: AtlasFiles/BridgingHeader.h
+        OTHER_LDFLAGS: "-lz"
       configs:
         Debug:
           # No iCloud entitlement — free-tier dev account compatible
