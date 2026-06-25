@@ -65,34 +65,27 @@ targets:
         NSLocalNetworkUsageDescription: Used to connect to local FTP and WebDAV servers
         ITSAppUsesNonExemptEncryption: false
 
-    entitlements:
-      path: AtlasFiles/AtlasFiles.entitlements
-      properties:
-        com.apple.security.application-groups:
-          - group.com.ribhu69.atlasfiles
-        com.apple.developer.icloud-container-identifiers:
-          - iCloud.com.ribhu69.atlasfiles
-        com.apple.developer.icloud-services:
-          - CloudDocuments
-        com.apple.developer.ubiquity-container-identifiers:
-          - iCloud.com.ribhu69.atlasfiles
+    # No top-level entitlements key — each config points to its own file below
 
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.ribhu69.atlasfiles
         PRODUCT_NAME: AtlasFiles
         INFOPLIST_FILE: AtlasFiles/Info.plist
-        CODE_SIGN_ENTITLEMENTS: AtlasFiles/AtlasFiles.entitlements
         DEVELOPMENT_TEAM: ""
         SWIFT_EMIT_LOC_STRINGS: true
         ENABLE_BITCODE: false
         TARGETED_DEVICE_FAMILY: "1,2"
       configs:
         Debug:
+          # No iCloud entitlement — free-tier dev account compatible
+          CODE_SIGN_ENTITLEMENTS: AtlasFiles/AtlasFiles.Debug.entitlements
           DEBUG_INFORMATION_FORMAT: dwarf
           SWIFT_OPTIMIZATION_LEVEL: "-Onone"
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
         Release:
+          # Full iCloud entitlement for App Store distribution
+          CODE_SIGN_ENTITLEMENTS: AtlasFiles/AtlasFiles.Release.entitlements
           DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
           SWIFT_OPTIMIZATION_LEVEL: "-O"
           VALIDATE_PRODUCT: true

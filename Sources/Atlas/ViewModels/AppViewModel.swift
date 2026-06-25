@@ -37,9 +37,11 @@ final class AppViewModel {
         // Local file provider is always present
         providers.append(LocalFileProvider())
 
-        // iCloud (if available)
-        let icloud = iCloudProvider()
-        providers.append(icloud)
+        // iCloud requires the paid developer program capability.
+        // Only wire it up in Release so Debug builds work on free accounts.
+        #if !DEBUG
+        providers.append(iCloudProvider())
+        #endif
 
         // Load saved connections
         for config in ConnectionStore.shared.connections {
